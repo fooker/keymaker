@@ -83,6 +83,19 @@ class Host(object):
         with self.crt_path.open('wb') as f:
             f.write(crt_data)
 
+    def revoke(self):
+        if not self.exists:
+            raise Exception('Certificate for host does not exist')
+
+        crt = self.load_crt()
+
+        self.__store.authority.renew_crt(serial=crt.get_serial_number())
+
+        self.crt_path.unlink()
+        self.key_path.unlink()
+
+        self.path.rmdir()
+
 
 class Store(object):
     def __init__(self,

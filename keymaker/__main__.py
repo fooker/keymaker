@@ -11,6 +11,7 @@ parser.add_argument('-b', '--base',
                     metavar='PATH',
                     help='The path where all certificates are stored')
 
+import keymaker.commands
 
 def main():
     args = parser.parse_args()

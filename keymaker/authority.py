@@ -84,7 +84,13 @@ class Authority(object):
 
     def revoke_crt(self, serial):
         crt_id, csrf = self.__find_crt_id(serial)
-        pass
+
+        self.__session \
+        .post('https://secure.cacert.org/account.php',
+              data={'revoke': 'Revoke/Delete',
+                    'oldid': 12,
+                    'revokeid[]': crt_id,
+                    'csrf': csrf})
 
     def fetch_crt(self, serial):
         crt_id, _ = self.__find_crt_id(serial)
