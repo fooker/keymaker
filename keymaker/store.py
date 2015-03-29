@@ -89,7 +89,7 @@ class Store(object):
                  base_path):
         self.__base_path = path.Path(base_path)
 
-        self.__authority = Authority(self.__base_path / '.client.pem')
+        self.__authority = Authority(self)
 
     @property
     def base_path(self):

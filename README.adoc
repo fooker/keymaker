@@ -1,0 +1,60 @@
+keymaker
+========
+A management tool for SSL certificates and keys
+
+*keymaker* is a tool build ease the management of SSL server certificates by having an easy to use interface for the most common tasks.
+
+
+Concept
+-------
+*keymaker* manages a local (as on the computer it's executed) store which contains the certificates and keys for a number of hosts and where all actions are applied to.
+Each certificate is identified and addressed by the host name, which is also used as the +common name+ (+CN+) in the certificate.
+
+The store is implemented as a simple folder on the local filesystem whereas each certificate has a sub-folder named as the host name.
+Inside these certificate specific folders, two files exists: +server.crt+ containing the SSL certificate and +server.key+ containing the according key pair.
+
+For actions requiring a certificate authority, *keymaker* handles the communication with the authority as configured by the store (only CACert supported by now).
+
+
+Installation
+------------
+Installation from source requires an existing +python >= 3.4+ installation including +setuptools+.
+
+After downloading the source from a release package or cloning the repository the tool can be installed using +setuptools+ (as root):
+
+    python3 setup.py install
+
+This will ensure all required libraries are installed and installs the tool to the system.
+
+
+Usage
+-----
+All actions are available using the +keymaker+ command.
+Calling +keymaker --help+ will provide a complete list of actions and accepted parameters and arguments.
+
+Prepare the store
+~~~~~~~~~~~~~~~~~
+The store directory must be created and a CACert client key and certificate must be saved inside the store as +.client.crt+ together with the according key saved as +.clien.key+.
+
+If existing certificates and keys should be added to the store, the according directories must be created and the certificate and key files must be stored as described in _Concept_.
+
+Creating a certificate
+~~~~~~~~~~~~~~~~~~~~~~
+Creating a new host entry in the store can be done by this:
+
+    keymaker -b ${KEYSTORE} create example.com
+
+Listing certificates
+~~~~~~~~~~~~~~~~~~~~
+A list of all hosts in the store can be retrieved by this:
+
+    keymaker -b ${KEYSTORE} list
+
+
+Problems and Feedback
+---------------------
+Feedback is always appreciated and can be send by mail to fooker@lab.sh.
+
+Please report bugs and feature request to https://github.com/fooker/keymaker/issues.
+
+

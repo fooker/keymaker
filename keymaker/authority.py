@@ -5,9 +5,12 @@ import bs4
 
 
 class Authority(object):
-    def __init__(self, key_path):
+    def __init__(self, store):
+        self.__store = store
+
         self.__session = requests.Session()
-        self.__session.cert = str(key_path)
+        self.__session.cert = (str(store.base_path / '.client.crt'),
+                               str(store.base_path / '.client.key'))
 
     def __find_crt_id(self, serial):
         soup = bs4.BeautifulSoup(

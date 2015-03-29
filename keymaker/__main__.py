@@ -1,13 +1,7 @@
-# import requests
-# import bs4
-# import urllib.parse
-
 import sys
 
 from keymaker import parser
-
 from keymaker.store import Store
-from keymaker.authority import Authority
 
 
 parser.add_argument('-b', '--base',
@@ -17,9 +11,8 @@ parser.add_argument('-b', '--base',
                     metavar='PATH',
                     help='The path where all certificates are stored')
 
-import keymaker.commands
 
-if __name__ == '__main__':
+def main():
     args = parser.parse_args()
 
     store = Store(base_path=args.base_path)
@@ -29,7 +22,10 @@ if __name__ == '__main__':
                   args=args)
 
     except Exception as e:
-        raise
-        # print(str(e), file=sys.stderr)
-        #
-        # sys.exit(1)
+        print(str(e), file=sys.stderr)
+
+        sys.exit(1)
+
+
+if __name__ == '__main__':
+    main()
