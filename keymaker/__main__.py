@@ -6,8 +6,8 @@ from keymaker.store import Store
 
 parser.add_argument('-b', '--base',
                     dest='base_path',
+                    default='/etc/ssl/keymaker',
                     type=str,
-                    required=True,
                     metavar='PATH',
                     help='The path where all certificates are stored')
 

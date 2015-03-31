@@ -34,7 +34,7 @@ Calling +keymaker --help+ will provide a complete list of actions and accepted p
 
 Configure the store
 ~~~~~~~~~~~~~~~~~~~
-The store directory must be created and a configuration file called +config.ini+ must be saved inside the store.
+The store directory (by default +/etc/ssl/keymaker+) must be created and a configuration file called +config.ini+ must be saved inside the store.
 
 The store configuration must contain at least the following:
 
