@@ -1,3 +1,4 @@
+import configparser
 import pathlib as path
 
 from OpenSSL import crypto
@@ -30,7 +31,9 @@ class Host(object):
 
     @property
     def exists(self):
-        return self.key_path.exists() and self.crt_path.exists()
+        return (self.path.exists() and
+                self.key_path.exists() and
+                self.crt_path.exists())
 
     def load_crt(self):
         with self.crt_path.open('rb') as f:
@@ -102,7 +105,12 @@ class Store(object):
                  base_path):
         self.__base_path = path.Path(base_path)
 
-        self.__authority = Authority['cacert'](self)
+        with (self.__base_path / 'config.ini').open('r') as f:
+            self.__config = configparser.ConfigParser()
+            self.__config.read_file(f)
+
+        authority_factory = Authority[self.__config['authority']['type']]
+        self.__authority = authority_factory(store=self)
 
     @property
     def base_path(self):
@@ -111,6 +119,10 @@ class Store(object):
     @property
     def authority(self):
         return self.__authority
+
+    @property
+    def config(self):
+        return self.__config
 
     def __iter__(self):
         return (host_path.name

@@ -8,11 +8,10 @@ import bs4
 
 class CACert(Authority):
     def __init__(self, store):
-        self.__store = store
+        super(CACert, self).__init__(store=store)
 
         self.__session = requests.Session()
-        self.__session.cert = (str(store.base_path / '.client.crt'),
-                               str(store.base_path / '.client.key'))
+        self.__session.cert = self.config.get('cert', 'client.pem').split('\n')
 
     def __find_crt_id(self, serial):
         soup = bs4.BeautifulSoup(

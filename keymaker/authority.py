@@ -20,6 +20,10 @@ class Authority(object,
     def store(self):
         return self.__store
 
+    @property
+    def config(self):
+        return self.store.config['authority']
+
     @abstractmethod
     def create_crt(self, csr):
         pass

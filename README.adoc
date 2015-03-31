@@ -32,9 +32,16 @@ Usage
 All actions are available using the +keymaker+ command.
 Calling +keymaker --help+ will provide a complete list of actions and accepted parameters and arguments.
 
-Prepare the store
-~~~~~~~~~~~~~~~~~
-The store directory must be created and a CACert client key and certificate must be saved inside the store as +.client.crt+ together with the according key saved as +.clien.key+.
+Configure the store
+~~~~~~~~~~~~~~~~~~~
+The store directory must be created and a configuration file called +config.ini+ must be saved inside the store.
+
+The store configuration must contain at least the following:
+
+    [authority]
+    type=cacert
+
+and a cacert client certificate and key must be stored under the store directory as +client.pem+.
 
 If existing certificates and keys should be added to the store, the according directories must be created and the certificate and key files must be stored as described in _Concept_.
 
