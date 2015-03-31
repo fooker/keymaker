@@ -6,6 +6,7 @@ import pkg_resources
 class AuthorityMeta(ABCMeta):
     def __getitem__(self,
                     name):
+        # Get all factories with matching name and load and return the first one
         for ep in pkg_resources.iter_entry_points(group='keymaker.authorities',
                                                   name=name):
             return ep.load()

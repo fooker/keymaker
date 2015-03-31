@@ -3,6 +3,7 @@ import pathlib as path
 
 from OpenSSL import crypto
 
+from keymaker.commands import KeymakerError
 from keymaker.authority import Authority
 
 
@@ -105,11 +106,21 @@ class Store(object):
                  base_path):
         self.__base_path = path.Path(base_path)
 
-        with (self.__base_path / 'config.ini').open('r') as f:
+        # Check if store is valid and configured and read it
+        config_path = self.__base_path / 'config.ini'
+        if not config_path.exists():
+            raise KeymakerError('Store does not exist or is not configured: ' + base_path)
+        with config_path.open('r') as f:
             self.__config = configparser.ConfigParser()
             self.__config.read_file(f)
 
-        authority_factory = Authority[self.__config['authority']['type']]
+        # Find the authority factory as configured
+        authority_type = self.__config['authority']['type']
+        authority_factory = Authority[authority_type]
+        if authority_factory is None:
+            raise KeymakerError('Unknown authority type: ' + authority_type)
+
+        # Create the authority instance
         self.__authority = authority_factory(store=self)
 
     @property

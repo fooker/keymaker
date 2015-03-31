@@ -12,20 +12,23 @@ parser.add_argument('-b', '--base',
                     help='The path where all certificates are stored')
 
 
-import keymaker.commands
+from keymaker.commands import *
 
 
 def main():
+    # Parse the command line arguments
     args = parser.parse_args()
 
-    store = Store(base_path=args.base_path)
-
     try:
+        # Create a store instance
+        store = Store(base_path=args.base_path)
+
+        # Run the command function
         args.func(store=store,
                   args=args)
 
-    except Exception as e:
-        print(str(e), file=sys.stderr)
+    except KeymakerError as e:
+        print(e.what, file=sys.stderr)
 
         sys.exit(1)
 
