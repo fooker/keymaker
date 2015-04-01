@@ -14,11 +14,11 @@ class CACert(Authority):
         # Get the certificate and key path and resolve it relative to the store location
         client_crt_path = self.store.base_path / self.config.get('client_crt', 'client.crt')
         if not client_crt_path.exists():
-            raise KeymakerError('CACert client certificate not found: ' + client_crt_path)
+            raise KeymakerError('CACert client certificate not found: ' + str(client_crt_path))
 
         client_key_path = self.store.base_path / self.config.get('client_key', 'client.key')
         if not client_key_path.exists():
-            raise KeymakerError('CACert client key not found: ' + client_key_path)
+            raise KeymakerError('CACert client key not found: ' + str(client_key_path))
 
         # Create a session for HTTP requests
         self.__session = requests.Session()

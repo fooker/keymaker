@@ -109,7 +109,7 @@ class Store(object):
         # Check if store is valid and configured and read it
         config_path = self.__base_path / 'config.ini'
         if not config_path.exists():
-            raise KeymakerError('Store does not exist or is not configured: ' + base_path)
+            raise KeymakerError('Store does not exist or is not configured: ' + str(self.__base_path))
         with config_path.open('r') as f:
             self.__config = configparser.ConfigParser()
             self.__config.read_file(f)
