@@ -41,7 +41,7 @@ The store configuration must contain at least the following:
     [authority]
     type=cacert
 
-and a cacert client certificate and key must be stored under the store directory as +client.pem+.
+and a CACert client certificate and key must be stored under the store directory as +client.crt+ and +client.key+.
 
 If existing certificates and keys should be added to the store, the according directories must be created and the certificate and key files must be stored as described in _Concept_.
 

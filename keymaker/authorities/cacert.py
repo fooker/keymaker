@@ -1,3 +1,4 @@
+from keymaker.commands import KeymakerError
 from keymaker.authority import Authority
 
 import urllib
@@ -10,8 +11,18 @@ class CACert(Authority):
     def __init__(self, store):
         super(CACert, self).__init__(store=store)
 
+        # Get the certificate and key path and resolve it relative to the store location
+        client_crt_path = self.store.base_path / self.config.get('client_crt', 'client.crt')
+        if not client_crt_path.exists():
+            raise KeymakerError('CACert client certificate not found: ' + client_crt_path)
+
+        client_key_path = self.store.base_path / self.config.get('client_key', 'client.key')
+        if not client_key_path.exists():
+            raise KeymakerError('CACert client key not found: ' + client_key_path)
+
+        # Create a session for HTTP requests
         self.__session = requests.Session()
-        self.__session.cert = self.config.get('cert', 'client.pem').split('\n')
+        self.__session.cert = str(client_crt_path), str(client_key_path)
 
     def __find_crt_id(self, serial):
         soup = bs4.BeautifulSoup(
