@@ -23,7 +23,7 @@ def info(store,
     print('  Issuer:')
     for k, v in crt.get_issuer().get_components():
         print('    %s = %s' % (k.decode('ascii'), v.decode('ascii')))
-    print('  Subject')
+    print('  Subject:')
     for k, v in crt.get_subject().get_components():
         print('    %s = %s' % (k.decode('ascii'), v.decode('ascii')))
 
