@@ -23,6 +23,7 @@ class CACert(Authority):
         # Create a session for HTTP requests
         self.__session = requests.Session()
         self.__session.cert = str(client_crt_path), str(client_key_path)
+        self.__session.verify = '/etc/ssl/cert.pem'
 
     def __find_crt_id(self, serial):
         soup = bs4.BeautifulSoup(
