@@ -11,7 +11,7 @@ def info(store,
 
     key = host.load_key()
 
-    print('Private Key:')
+    print('Key:')
     print('  Type = %s' % {crypto.TYPE_RSA: 'RSA',
                          crypto.TYPE_DSA: 'DSA'}[key.type()])
     print('  Size = %s' % key.bits())
@@ -24,13 +24,13 @@ def info(store,
     print('  Signature Algorithm = %s' % crt.get_signature_algorithm().decode('ascii'))
     print('  Issuer:')
     for k, v in crt.get_issuer().get_components():
-        print('    %s = %s' % (k.decode('ascii'), v.decode('ascii')))
+        print('    %-2s = %s' % (k.decode('ascii'), v.decode('ascii')))
     print('  Subject:')
     for k, v in crt.get_subject().get_components():
-        print('    %s = %s' % (k.decode('ascii'), v.decode('ascii')))
+        print('    %-2s = %s' % (k.decode('ascii'), v.decode('ascii')))
     print('  Valid:')
-    print('    Not Before = %s' % datetime.datetime.fromtimestamp(crt.get_notBefore()).strftime('%Y-%m-%d %H:%M:%S'))
-    print('    Not After = %s' % datetime.datetime.fromtimestamp(crt.get_notAfter()).strftime('%Y-%m-%d %H:%M:%S'))
+    print('    Not Before = %s' % datetime.datetime.strptime(crt.get_notBefore().decode('ascii'), '%Y%m%d%H%M%SZ'))
+    print('    Not After  = %s' % datetime.datetime.strptime(crt.get_notAfter().decode('ascii'), '%Y%m%d%H%M%SZ'))
 
 
 info.parser = subparsers.add_parser('info',
