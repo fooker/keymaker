@@ -2,6 +2,8 @@ from keymaker.commands import subparsers
 
 from OpenSSL import crypto
 
+import datetime
+
 
 def info(store,
          args):
@@ -26,6 +28,9 @@ def info(store,
     print('  Subject:')
     for k, v in crt.get_subject().get_components():
         print('    %s = %s' % (k.decode('ascii'), v.decode('ascii')))
+    print('  Valid:')
+    print('    Not Before = %s' % datetime.datetime.fromtimestamp(crt.get_notBefore()).strftime('%Y-%m-%d %H:%M:%S'))
+    print('    Not After = %s' % datetime.datetime.fromtimestamp(crt.get_notAfter()).strftime('%Y-%m-%d %H:%M:%S'))
 
 
 info.parser = subparsers.add_parser('info',
